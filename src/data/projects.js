@@ -11,7 +11,7 @@ const projects = [
 		mockup: "CI",
 		cover: "/projects/cineinfo/cover.png",
 		gallery: [
-			"/projects/cineinfo/cover.png",
+			"/public/projects/cineinfo/cover.png",
 			"/projects/cineinfo/2.png",
             "/projects/cineinfo/3.png",
 			"/projects/cineinfo/4.png",
