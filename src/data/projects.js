@@ -11,14 +11,14 @@ const projects = [
 		mockup: "CI",
 		cover: "/projects/cineinfo/cover.png",
 		gallery: [
-			"/public/projects/cineinfo/cover.png",
+			"/projects/cineinfo/cover.png",
 			"/projects/cineinfo/2.png",
             "/projects/cineinfo/3.png",
 			"/projects/cineinfo/4.png",
 			"/projects/cineinfo/5.png",
             "/projects/cineinfo/6.png",
             "/projects/cineinfo/7.png",
-            "/projects/cineinfo/8.png",
+            "/projects/cineinfo/8.png"
             
 		],
 		highlights: [

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiChevronLeft, FiChevronRight, FiExternalLink, FiGithub, FiX } from "react-icons/fi";
 import Badge from "./Badge";
+import { toAssetUrl } from "../../utils/assetUrl";
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const images = useMemo(() => {
@@ -84,7 +85,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.img
                     key={`${project.id}-${activeIndex}-${images[activeIndex]}`}
-                    src={images[activeIndex]}
+                    src={toAssetUrl(images[activeIndex])}
                     alt={`Captura ${activeIndex + 1} de ${project.title}`}
                     className="h-full w-full object-contain"
                     loading="lazy"

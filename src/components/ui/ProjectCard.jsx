@@ -1,5 +1,6 @@
 import { FiEye, FiGithub } from "react-icons/fi";
 import Badge from "./Badge";
+import { toAssetUrl } from "../../utils/assetUrl";
 
 const sizeClasses = {
   large: "md:col-span-2 md:row-span-2",
@@ -18,7 +19,7 @@ const ProjectCard = ({ project, onOpenModal }) => {
       <div className="mb-5 aspect-[16/10] overflow-hidden rounded-xl border border-white/10 bg-black/30">
         {project.cover ? (
           <img
-            src={project.cover}
+            src={toAssetUrl(project.cover)}
             alt={`Captura de ${project.title}`}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-110"
             loading="lazy"
