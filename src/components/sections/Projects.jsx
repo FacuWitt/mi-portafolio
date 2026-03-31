@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import projects from "../../data/projects";
 import ProjectCard from "../ui/ProjectCard";
+import ProjectModal from "../ui/ProjectModal";
 import useScrollAnimation from "../../hooks/useScrollAnimation";
 
 const Projects = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <section id="projects" className="py-20 sm:py-28">
-      <div className="section-container" ref={ref}>
+    <>
+      <section id="projects" className="py-20 sm:py-28">
+        <div className="section-container" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -21,12 +25,19 @@ const Projects = () => {
 
           <div className="mt-10 grid gap-5 md:grid-cols-3 auto-rows-[minmax(240px,auto)]">
             {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} onOpenModal={setSelectedProject} />
             ))}
           </div>
         </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
+
+      <ProjectModal
+        project={selectedProject}
+        isOpen={Boolean(selectedProject)}
+        onClose={() => setSelectedProject(null)}
+      />
+    </>
   );
 };
 

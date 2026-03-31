@@ -19,7 +19,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
+  return ( 
     <header
       className={`fixed left-0 right-0 top-0 z-50 transition duration-300 ${
         scrolled ? "bg-obsidian/75 backdrop-blur-xl" : "bg-transparent"
@@ -29,6 +29,8 @@ const Navbar = () => {
         <a href="#hero" className="font-display text-lg font-bold tracking-tight text-white">
           Facundo <span className="text-accentBlue">Witt</span>
         </a>
+
+        
 
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
