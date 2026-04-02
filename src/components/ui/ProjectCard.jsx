@@ -11,7 +11,8 @@ const sizeClasses = {
 const ProjectCard = ({ project, onOpenModal }) => {
   return (
     <article
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-panel/80 p-5 shadow-panel transition duration-500 hover:-translate-y-1 hover:border-accentBlue/40 hover:shadow-neon ${
+      onClick={() => onOpenModal(project)}
+      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-panel/80 p-5 shadow-panel transition duration-500 hover:-translate-y-1 hover:cursor-pointer hover:border-accentBlue/40 hover:shadow-neon select-none ${
         sizeClasses[project.size] ?? ""
       }`}
     >
@@ -31,7 +32,7 @@ const ProjectCard = ({ project, onOpenModal }) => {
         )}
       </div>
 
-      <h3 className="font-display text-2xl font-semibold">{project.title}</h3>
+      <h3 className="font-display text-2xl font-semibold select-text">{project.title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-textMuted">{project.description}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">

@@ -17,7 +17,7 @@ const Hero = () => {
           className="mx-auto max-w-4xl text-center"
         >
           <p className="mb-4 inline-flex rounded-full border border-accentBlue/30 bg-accentBlue/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accentBlue">
-            Portfolio 2026
+            Portafolio 2026
           </p>
           <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl md:text-7xl">
             {personalInfo.name}

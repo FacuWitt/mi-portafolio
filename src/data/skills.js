@@ -5,15 +5,23 @@ const skills = [
   },
   {
     category: "Backend",
-    items: ["Java", "Spring Boot", "Python", "FastAPI", "REST APIs"],
+    items: ["Java", "Spring Boot", "Python", "FastAPI", "Node.js", "Express"],
   },
   {
-    category: "Data & DB",
-    items: ["SQL", "PostgreSQL", "MySQL", "Modelado de Datos"],
+    category: "Mejora de Procesos",
+    items: ["Estudio de mercado", "Alineacion estratégica",  "Diseño, Implementación y seguimiento"],
   },
   {
-    category: "Tools & Gestion",
-    items: ["Git", "Postman", "Figma", "Miro", "Scrum"],
+    category: "Datos & DB",
+    items: ["SQL", "PostgreSQL", "MySQL", "Diseño de Métricas", "KPIs"],
+  },
+  {
+    category: "Herramientas y Gestión",
+    items: ["Git", "Postman", "Figma", "Miro", "GitHub", "Jira"],
+  },
+  {
+    category: "Proyectos",
+    items: ["Marcos ágiles", "Scrum", "Kanban"],
   },
 ];
 

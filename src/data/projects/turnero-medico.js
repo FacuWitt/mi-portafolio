@@ -1,6 +1,6 @@
 const turneroMedico = {
 		id: "turnero-medico",
-		title: "Turnero Medico (Vitalis)",
+		title: "Vitalis (Turnero Medico)",
 		description:
 			"Sistema de gestión de turnos médicos con control de acceso, utilización de agendas, notificaciones por email y tareas programadas.",
 		longDescription:

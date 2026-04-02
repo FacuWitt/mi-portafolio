@@ -52,9 +52,9 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   };
 
   const imageVariants = {
-    initial: { opacity: 0.5, x: 50, scale: 1.01, filter: "blur(3px)"},
+    initial: { opacity: 0, x: 50, scale: 1.01, filter: "blur(3px)"},
     animate: { opacity: 1, x: 0, scale: 1, filter: "blur(0px)"},
-    exit: { opacity: 0, x: -50, scale: 0.99, filter: "blur(3px)"},
+    exit: { opacity: 0, x: -10, scale: 0.99, filter: "blur(3px)"},
   };
 
   return (
@@ -81,8 +81,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
         <div className="grid h-full gap-4 lg:grid-cols-[1fr_0.65fr]">
           <div className="relative bg-black/40 p-2 sm:p-4">
             {images.length ? (
-              <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/50">
-                <AnimatePresence mode="sync" initial={false}>
+              <div className="flex h-[30vh] w-full items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/50 sm:h-[20vh] lg:h-full">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.img
                     key={`${project.id}-${activeIndex}-${images[activeIndex]}`}
                     src={toAssetUrl(images[activeIndex])}

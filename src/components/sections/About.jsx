@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
-import { FiCpu, FiCode, FiPenTool } from "react-icons/fi";
+import { FiCpu, FiCode, FiCrosshair, FiCompass  } from "react-icons/fi";
 import personalInfo from "../../data/personalInfo";
 import Badge from "../ui/Badge";
 import useScrollAnimation from "../../hooks/useScrollAnimation";
 
 const highlights = [
   { icon: FiCode, label: "Backend y Frontend" },
-  { icon: FiCpu, label: "Algoritmia y Simulacion" },
-  { icon: FiPenTool, label: "Diseño orientado a UX" },
+  { icon: FiCpu, label: "Modelos de simulación" },
+  { icon: FiCompass, label: "Gestión de Mejora de Procesos" },
+  { icon: FiCrosshair , label: "Análisis funcional" }
 ];
 
 const About = () => {

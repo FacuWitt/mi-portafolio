@@ -20,7 +20,7 @@ const Projects = () => {
         >
           <h2 className="font-display text-3xl font-semibold sm:text-4xl">Proyectos Destacados</h2>
           <p className="mt-3 max-w-3xl text-textMuted">
-            Seleccion de trabajos con foco en backend robusto, arquitectura y experiencias frontend dinamicas.
+            Aquí verás una selección de mis proyectos más recientes. Todos fueron desarrollados en equipo, priorizando el aprendizaje continuo y la superación de desafíos de todo tipo.
           </p>
 
           <div className="mt-10 grid gap-5 md:grid-cols-3 auto-rows-[minmax(240px,auto)]">

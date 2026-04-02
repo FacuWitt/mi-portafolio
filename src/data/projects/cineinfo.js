@@ -1,6 +1,6 @@
 const cineinfo = {
 		id: "cineinfo",
-		title: "CineInfo",
+		title: "CineInfo (Plataforma de Películas y Series)",
 		description:
 			"Plataforma estilo IMDb para películas y series con experiencia fullstack, control de roles, autenticacion, panel de administracion y diseño responsivo.",
 		longDescription:
