@@ -26,7 +26,7 @@ const cineinfo = {
 			"Experiencia de usuario con modales, pills y diseño responsivo",
 			"Trabajo colaborativo con control de versiones en GitHub",
 		],
-		size: "wide",
+		size: "medium",
 	};
 
 export default cineinfo;

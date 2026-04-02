@@ -25,6 +25,6 @@ const mejoraProcesosStoller = {
       "/projects/mejora-procesos-stoller/m6.png",
       ],
   
-  size: "wide",
+  size: "medium",
 };
 export default mejoraProcesosStoller;

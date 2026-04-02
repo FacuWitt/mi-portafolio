@@ -82,7 +82,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
           <div className="relative bg-black/40 p-2 sm:p-4">
             {images.length ? (
               <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/50">
-                <AnimatePresence mode="wait" initial={false}>
+                <AnimatePresence mode="sync" initial={false}>
                   <motion.img
                     key={`${project.id}-${activeIndex}-${images[activeIndex]}`}
                     src={toAssetUrl(images[activeIndex])}
