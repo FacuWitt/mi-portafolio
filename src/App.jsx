@@ -16,7 +16,7 @@ const App = () => {
     <div className="relative min-h-screen overflow-x-hidden">
       <Navbar />
       <main>
-        <Hero onOpenProject={setSelectedProject} />
+        <Hero />
         <About />
         <Projects onOpenProject={setSelectedProject} />
         <Skills />

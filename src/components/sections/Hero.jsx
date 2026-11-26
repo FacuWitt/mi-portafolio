@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import personalInfo from "../../data/personalInfo";
 import projects from "../../data/projects";
 import { toAssetUrl } from "../../utils/assetUrl";
+import { scrollToElement } from "../../utils/scrollToSection";
 
 // Posiciones del abanico de tarjetas (de izquierda a derecha)
 const fan = [
@@ -22,7 +23,7 @@ const Arrow = ({ className = "" }) => (
 
 // Qué tanto se abre el abanico según el ancho de pantalla
 const useFanSpread = () => {
-  const get = () => (typeof window === "undefined" ? 0.62 : window.innerWidth < 640 ? 0.3 : window.innerWidth < 1024 ? 0.5 : 0.62);
+  const get = () => (typeof window === "undefined" ? 0.76 : window.innerWidth < 640 ? 0.33 : window.innerWidth < 1024 ? 0.6 : 0.76);
   const [spread, setSpread] = useState(get);
   useEffect(() => {
     const onResize = () => setSpread(get());
@@ -32,9 +33,40 @@ const useFanSpread = () => {
   return spread;
 };
 
-const Hero = ({ onOpenProject }) => {
+const Hero = () => {
   const reduce = useReducedMotion();
   const spread = useFanSpread();
+  // Tarjeta bajo el mouse o con foco: pasa adelante para que se lea
+  const [activeId, setActiveId] = useState(null);
+  // La última tarjeta activa conserva su capa un instante mientras vuelve a su lugar
+  const [returningId, setReturningId] = useState(null);
+  // Hasta que termina la entrada del abanico se usa la animación de carga
+  const [entered, setEntered] = useState(Boolean(reduce));
+  const returnTimer = useRef(null);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setEntered(true), 1500);
+    return () => {
+      window.clearTimeout(t);
+      window.clearTimeout(returnTimer.current);
+    };
+  }, []);
+
+  const activate = (id) => {
+    window.clearTimeout(returnTimer.current);
+    setReturningId(null);
+    setActiveId(id);
+  };
+
+  const release = (id) => {
+    setActiveId((current) => (current === id ? null : current));
+    setReturningId(id);
+    window.clearTimeout(returnTimer.current);
+    returnTimer.current = window.setTimeout(() => setReturningId(null), 220);
+  };
+
+  // 48px extra para que la pestaña de la franja quede a la vista bajo la barra
+  const goToProject = (id) => scrollToElement(document.getElementById(`proyecto-${id}`), 48);
   // La tarjeta central es MIND: el proyecto más fuerte queda en el centro del abanico
   const fanProjects = [projects[2], projects[1], projects[0], projects[3], projects[4]].filter(Boolean);
 
@@ -120,20 +152,52 @@ const Hero = ({ onOpenProject }) => {
         </p>
         {fanProjects.map((project, i) => {
           const pos = fan[i];
+          const isActive = activeId === project.id;
+          const isDimmed = activeId !== null && !isActive;
+          const baseZ = i === 2 ? 30 : i === 1 || i === 3 ? 20 : 10;
+          const zIndex = isActive ? 50 : returningId === project.id ? 45 : baseZ;
+          const ease = [0.22, 1, 0.36, 1];
+          const transition = !entered
+            ? { duration: 0.7, delay: 0.5 + i * 0.05, ease }
+            : reduce
+              ? { duration: 0 }
+              : { duration: isActive ? 0.3 : 0.2, ease };
           return (
             <motion.button
               key={project.id}
               type="button"
-              onClick={() => onOpenProject(project)}
-              aria-label={`Ver ${project.title}`}
-              className={`group absolute left-1/2 top-0 w-[124px] -ml-[62px] origin-bottom overflow-hidden rounded-[14px] border-[3px] border-ink text-left shadow-[0_18px_30px_-18px_rgba(28,27,26,0.55)] sm:w-[200px] sm:-ml-[100px] ${project.theme.bg} ${
-                i === 2 ? "z-30" : i === 1 || i === 3 ? "z-20" : "z-10"
-              }`}
-              style={{ aspectRatio: "3 / 4" }}
-              initial={reduce ? false : { rotate: 0, x: 0, y: 40, opacity: 0 }}
-              animate={{ rotate: pos.rotate, x: `${pos.x * spread}px`, y: pos.y, opacity: 1 }}
-              whileHover={reduce ? undefined : { y: pos.y - 18, transition: { duration: 0.2 } }}
-              transition={{ duration: 0.7, delay: 0.5 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => goToProject(project.id)}
+              onMouseEnter={() => activate(project.id)}
+              onMouseLeave={() => release(project.id)}
+              onFocus={() => activate(project.id)}
+              onBlur={() => release(project.id)}
+              aria-label={`Ir al proyecto ${project.title}`}
+              className={`group absolute left-1/2 top-0 w-[124px] -ml-[62px] origin-bottom overflow-hidden rounded-[14px] border-[3px] border-ink text-left sm:w-[200px] sm:-ml-[100px] ${project.theme.bg}`}
+              style={{
+                aspectRatio: "3 / 4",
+                zIndex,
+              }}
+              initial={
+                reduce
+                  ? false
+                  : { rotate: 0, x: 0, y: 40, opacity: 0, scale: 1, filter: "brightness(1) saturate(1) blur(0px)" }
+              }
+              animate={{
+                // La activa se endereza un poco, sube, se agranda y gana sombra
+                rotate: isActive ? pos.rotate * 0.4 : pos.rotate,
+                x: `${pos.x * spread}px`,
+                y: isActive ? pos.y - 28 : pos.y,
+                scale: isActive ? 1.07 : 1,
+                opacity: 1,
+                // Las demás se apagan para que resalte la elegida
+                filter: isDimmed
+                  ? "brightness(0.9) saturate(0.85) blur(1.5px)"
+                  : "brightness(1) saturate(1) blur(0px)",
+                boxShadow: isActive
+                  ? "0 34px 48px -20px rgba(28,27,26,0.6)"
+                  : "0 18px 30px -18px rgba(28,27,26,0.55)",
+              }}
+              transition={transition}
             >
               <div className="h-[62%] overflow-hidden border-b-[3px] border-ink bg-white">
                 <img

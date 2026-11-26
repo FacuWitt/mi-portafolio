@@ -8,7 +8,9 @@ const ProjectCard = ({ project, index, featured = false, onOpen }) => {
 
   return (
     <article
-      className={`relative ${index > 0 ? "-mt-3" : ""}`}
+      id={`proyecto-${project.id}`}
+      tabIndex={-1}
+      className={`relative outline-none ${index > 0 ? "-mt-3" : ""}`}
       style={{ zIndex: index + 1 }}
       aria-labelledby={`project-${project.id}`}
     >
