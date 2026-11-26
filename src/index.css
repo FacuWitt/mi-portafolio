@@ -1,65 +1,121 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
-  @apply bg-obsidian text-textMain font-body antialiased;
-  background-image: radial-gradient(circle at 10% -10%, rgba(6, 201, 255, 0.2), transparent 35%),
-    radial-gradient(circle at 90% 0%, rgba(143, 92, 255, 0.24), transparent 40%),
-    linear-gradient(180deg, #070a13 0%, #0b1222 42%, #070a13 100%);
+  @apply bg-paper font-body text-ink antialiased;
+  /* Renglones de cuaderno: líneas finas cada 32px */
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 31px,
+    rgba(28, 27, 26, 0.055) 31px,
+    rgba(28, 27, 26, 0.055) 32px
+  );
   min-height: 100vh;
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(143, 92, 255, 0.45) transparent;
+::selection {
+  background: #f2c230;
+  color: #1c1b1a;
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(6, 201, 255, 0.45), rgba(143, 92, 255, 0.45));
-  border-radius: 999px;
+:focus-visible {
+  outline: 2px solid #2a4bd7;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .section-container {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
 }
 
-.glass-panel {
-  @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+/* Titulares: Archivo extendida y negra */
+.type-wide {
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
 }
 
-.neon-ring {
-  box-shadow: 0 0 0 1px rgba(6, 201, 255, 0.3), 0 0 30px rgba(143, 92, 255, 0.2);
+.type-tall {
+  font-stretch: 75%;
+  font-variation-settings: "wdth" 75;
 }
 
-.grid-noise::before {
-  content: "";
+/* Cinta adhesiva semitransparente */
+.tape {
   position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 28px 28px;
+  height: 26px;
+  width: 92px;
+  background: rgba(242, 194, 48, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  mix-blend-mode: multiply;
+}
+
+.tape--blue {
+  background: rgba(42, 75, 215, 0.28);
+}
+
+/* Etiquetas tipo washi con bordes dentados */
+.washi {
+  --tooth: 5px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    calc(100% - var(--tooth)) 25%,
+    100% 50%,
+    calc(100% - var(--tooth)) 75%,
+    100% 100%,
+    0 100%,
+    var(--tooth) 75%,
+    0 50%,
+    var(--tooth) 25%
+  );
+}
+
+/* Cruces de registro en las esquinas del hero */
+.crosshair {
+  position: absolute;
+  width: 14px;
+  height: 14px;
   pointer-events: none;
 }
 
-.font-quote {
-  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(28, 27, 26, 0.45);
+}
+
+.crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.crosshair::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+.photo-frame {
+  @apply bg-white p-2.5 pb-10;
+  box-shadow: 0 1px 2px rgba(28, 27, 26, 0.12), 0 12px 28px -14px rgba(28, 27, 26, 0.35);
 }

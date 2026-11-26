@@ -1,59 +1,59 @@
-import { motion } from "framer-motion";
-import { FiCpu, FiCode, FiCrosshair, FiCompass  } from "react-icons/fi";
 import personalInfo from "../../data/personalInfo";
-import Badge from "../ui/Badge";
-import useScrollAnimation from "../../hooks/useScrollAnimation";
-
-const highlights = [
-  { icon: FiCode, label: "Backend y Frontend" },
-  { icon: FiCpu, label: "Modelos de simulación" },
-  { icon: FiCompass, label: "Gestión de Mejora de Procesos" },
-  { icon: FiCrosshair , label: "Análisis funcional" }
-];
+import { toAssetUrl } from "../../utils/assetUrl";
 
 const About = () => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { now } = personalInfo;
 
   return (
-    <section id="about" className="py-20 sm:py-28">
-      <div className="section-container" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="glass-panel rounded-3xl p-7 sm:p-10"
-        >
-          <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
-            <div>
-              <h2 className="font-display text-3xl font-semibold sm:text-4xl">Sobre mi</h2>
-              <p className="mt-4 text-textMuted">{personalInfo.shortBio}</p>
-              <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-300 sm:text-base">
-                {personalInfo.about.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
+    <section id="about" className="scroll-mt-16 py-20 sm:py-28">
+      <div className="section-container">
+        <div className="grid gap-12 md:grid-cols-[260px_1fr] md:gap-16">
+          <div className="relative mx-auto w-[220px] md:mx-0 md:mt-10 md:w-full">
+            <figure className="photo-frame relative -rotate-3">
+              <span className="tape -top-3 left-1/2 -translate-x-1/2 rotate-[-4deg]" aria-hidden="true" />
+              <img
+                src={toAssetUrl(personalInfo.photo)}
+                alt="Facundo Witt"
+                className="aspect-square w-full object-cover grayscale-[15%]"
+                loading="lazy"
+              />
+              <figcaption className="absolute bottom-2 left-0 right-0 text-center font-hand text-xl text-inkSoft">
+                Córdoba, 2026
+              </figcaption>
+            </figure>
+          </div>
+
+          <div>
+            <h2 className="font-display text-4xl font-black leading-none type-wide sm:text-5xl">Sobre mí</h2>
+            <div className="mt-8 max-w-[62ch] space-y-5 text-[17px] leading-relaxed text-ink/90">
+              {personalInfo.about.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
 
-            <aside className="rounded-2xl border border-white/10 bg-slateDeep/70 p-6">
-              <h3 className="font-display text-xl font-semibold">Enfoque Profesional</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <Badge className="border-accentBlue/35 bg-accentBlue/10 text-accentBlue">UTN FRC</Badge>
-                <Badge className="border-accentViolet/35 bg-accentViolet/10 text-accentViolet">Fullstack</Badge>
-                <Badge>Pensamiento sistemico</Badge>
-              </div>
-              <div className="mt-6 space-y-3">
-                {highlights.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-3 rounded-xl border border-white/10 p-3">
-                    <span className="rounded-lg bg-white/5 p-2 text-accentBlue">
-                      <Icon />
-                    </span>
-                    <p className="text-sm text-slate-200">{label}</p>
-                  </div>
-                ))}
-              </div>
+            <ul className="mt-8 flex flex-wrap gap-3" aria-label="En qué me enfoco">
+              {personalInfo.tags.map((tag, i) => (
+                <li
+                  key={tag.label}
+                  className={`washi px-4 py-1.5 text-sm font-semibold ${tag.color}`}
+                  style={{ transform: `rotate(${[-1.5, 1, -0.5, 1.5][i % 4]}deg)` }}
+                >
+                  {tag.label}
+                </li>
+              ))}
+            </ul>
+
+            <aside className="relative mt-12 max-w-xl rotate-[0.6deg] bg-mustard/90 p-6 shadow-[0_10px_24px_-16px_rgba(28,27,26,0.6)]">
+              <span className="tape tape--blue -top-3 right-8 rotate-[6deg]" aria-hidden="true" />
+              <p className="font-hand text-3xl leading-none">ahora</p>
+              <p className="mt-3 font-display text-xl font-extrabold">
+                {now.place} <span className="font-semibold">· {now.area}</span>
+              </p>
+              <p className="text-sm font-medium text-ink/70">{now.since}</p>
+              <p className="mt-3 leading-relaxed">{now.text}</p>
             </aside>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

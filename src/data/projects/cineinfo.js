@@ -1,13 +1,16 @@
 const cineinfo = {
 		id: "cineinfo",
-		title: "CineInfo (Plataforma de Películas y Series)",
+		title: "CineInfo",
+  subtitle: "Plataforma de películas y series",
+  year: "2024",
+  kind: "Proyecto académico",
+  theme: { bg: "bg-ink", text: "text-paper", muted: "text-paper/70", button: "bg-mustard text-ink" },
 		description:
-			"Plataforma estilo IMDb para películas y series con experiencia fullstack, control de roles, autenticacion, panel de administracion y diseño responsivo.",
+			"Plataforma estilo IMDb para películas y series con experiencia fullstack, control de roles, autenticación, panel de administración y diseño responsivo.",
 		longDescription:
-			"Proyecto fullstack con foco en experiencia de usuario: modales, pills, botones reutilizables y panel de administracion para gestionar contenido audiovisual.",
+			"Proyecto fullstack con foco en experiencia de usuario: modales, pills, botones reutilizables y panel de administración para gestionar contenido audiovisual.",
 		technologies: ["React", "NodeJS", "Bootstrap", "Javascript"],
 		repoUrl: "https://github.com/FacuWitt/cineinfo.git",
-		mockup: "CI",
 		cover: "/projects/cineinfo/cover.png",
 		gallery: [
 			"/projects/cineinfo/cover.png",
@@ -26,7 +29,6 @@ const cineinfo = {
 			"Experiencia de usuario con modales, pills y diseño responsivo",
 			"Trabajo colaborativo con control de versiones en GitHub",
 		],
-		size: "medium",
 	};
 
 export default cineinfo;

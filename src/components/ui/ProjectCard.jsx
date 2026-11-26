@@ -1,62 +1,76 @@
-import { FiEye, FiGithub } from "react-icons/fi";
-import Badge from "./Badge";
 import { toAssetUrl } from "../../utils/assetUrl";
 
-const sizeClasses = {
-  large: "md:col-span-2 md:row-span-2",
-  wide: "md:col-span-2",
-  medium: "md:col-span-1",
-};
+// Franja de proyecto con pestaña de carpeta y captura pegada con cinta
+const ProjectCard = ({ project, index, featured = false, onOpen }) => {
+  const { theme } = project;
+  const tabOffset = ["left-0", "left-[16%]", "left-[32%]", "left-[8%]", "left-[24%]"][index % 5];
+  const tilt = index % 2 === 0 ? "rotate-[2deg]" : "-rotate-[2deg]";
 
-const ProjectCard = ({ project, onOpenModal }) => {
   return (
     <article
-      onClick={() => onOpenModal(project)}
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-panel/80 p-5 shadow-panel transition duration-500 hover:-translate-y-1 hover:cursor-pointer hover:border-accentBlue/40 hover:shadow-neon select-none ${
-        sizeClasses[project.size] ?? ""
-      }`}
+      className={`relative ${index > 0 ? "-mt-3" : ""}`}
+      style={{ zIndex: index + 1 }}
+      aria-labelledby={`project-${project.id}`}
     >
-      <div className="absolute -top-16 right-2 h-32 w-32 rounded-full bg-accentBlue/20 blur-3xl transition duration-500 group-hover:bg-accentViolet/25" />
-      <div className="mb-5 aspect-[16/10] overflow-hidden rounded-xl border border-white/10 bg-black/30">
-        {project.cover ? (
+      <div
+        className={`relative ml-0 inline-flex h-9 items-center gap-2 px-5 text-xs font-semibold sm:absolute sm:-top-9 ${tabOffset} ${theme.bg} ${theme.text}`}
+        style={{ clipPath: "polygon(0 100%, 10px 0, calc(100% - 10px) 0, 100% 100%)" }}
+      >
+        {project.kind} {project.year}
+      </div>
+
+      <div
+        className={`grid gap-8 px-6 py-9 sm:px-10 sm:py-12 md:grid-cols-[1fr_1.05fr] md:items-center ${theme.bg} ${theme.text} ${
+          featured ? "md:py-16" : ""
+        }`}
+      >
+        <div>
+          {project.award ? (
+            <p className="mb-4 inline-block -rotate-1 bg-mustard px-3 py-1 font-hand text-xl leading-none text-ink">
+              {project.award}
+            </p>
+          ) : null}
+          <h3
+            id={`project-${project.id}`}
+            className={`font-display font-black leading-[0.9] type-wide ${
+              featured ? "text-6xl sm:text-7xl" : "text-4xl sm:text-5xl"
+            }`}
+          >
+            {project.title}
+          </h3>
+          <p className={`mt-3 text-lg font-semibold ${theme.muted}`}>{project.subtitle}</p>
+          <p className="mt-5 max-w-[52ch] leading-relaxed">{project.description}</p>
+
+          <ul className={`mt-5 flex flex-wrap gap-x-3 gap-y-1 text-sm ${theme.muted}`} aria-label="Tecnologías">
+            {project.technologies.slice(0, featured ? 9 : 5).map((tech) => (
+              <li key={tech}>{tech}</li>
+            ))}
+          </ul>
+
+          <button
+            type="button"
+            onClick={onOpen}
+            className={`mt-8 px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 ${theme.button}`}
+          >
+            Ver proyecto
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={onOpen}
+          className={`relative mx-2 block ${tilt} bg-white p-2 text-left shadow-[0_20px_40px_-22px_rgba(0,0,0,0.7)] transition hover:rotate-0`}
+          aria-label={`Abrir galería de ${project.title}`}
+        >
+          <span className="tape -top-3 left-6 -rotate-6" aria-hidden="true" />
+          <span className="tape -top-3 right-6 rotate-6" aria-hidden="true" />
           <img
             src={toAssetUrl(project.cover)}
             alt={`Captura de ${project.title}`}
-            className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-110"
+            className="aspect-[16/10] w-full object-cover object-top"
             loading="lazy"
           />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-slateDeep via-panelSoft to-panel text-3xl font-bold text-accentBlue">
-            {project.mockup}
-          </div>
-        )}
-      </div>
-
-      <h3 className="font-display text-2xl font-semibold select-text">{project.title}</h3>
-      <p className="mt-3 text-sm leading-relaxed text-textMuted">{project.description}</p>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        {project.technologies.map((tech) => (
-          <Badge key={`${project.id}-${tech}`}>{tech}</Badge>
-        ))}
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={() => onOpenModal(project)}
-          className="inline-flex items-center gap-2 rounded-lg border border-accentBlue/30 bg-accentBlue/10 px-3 py-2 text-sm font-medium text-accentBlue transition hover:bg-accentBlue/20"
-        >
-          Ver más <FiEye />
         </button>
-        <a
-          href={project.repoUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-3 py-2 text-sm font-medium text-textMain transition hover:border-accentViolet/40 hover:text-accentViolet"
-        >
-          Repo <FiGithub />
-        </a>
       </div>
     </article>
   );

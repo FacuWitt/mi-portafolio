@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 
 const navItems = [
-  { label: "Inicio", href: "#hero" },
-  { label: "Sobre mi", href: "#about" },
+  { label: "Sobre mí", href: "#about" },
   { label: "Proyectos", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contacto", href: "#contact" },
+  { label: "Habilidades", href: "#skills" },
 ];
 
 const Navbar = () => {
@@ -15,53 +13,58 @@ const Navbar = () => {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return ( 
+  return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transition duration-300 ${
-        scrolled ? "bg-obsidian/75 backdrop-blur-xl" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "border-b border-rule bg-paper/90 backdrop-blur" : "border-b border-transparent"
       }`}
     >
       <div className="section-container flex h-16 items-center justify-between">
-        <a href="#hero" className="font-display text-lg font-bold tracking-tight text-white">
-          Facundo <span className="text-accentBlue">Witt</span>
+        <a href="#hero" className="flex items-center gap-2.5" aria-label="Facundo Witt, ir al inicio">
+          <span className="grid h-8 w-8 place-items-center bg-vermilion font-display text-sm font-black text-paper type-wide">
+            FW
+          </span>
+          <span className="hidden font-display text-[15px] font-semibold sm:inline">Facundo Witt</span>
         </a>
 
-        
-
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Principal">
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-sm font-medium text-textMuted transition hover:text-accentBlue"
-            >
+            <a key={item.href} href={item.href} className="text-sm font-medium text-inkSoft transition hover:text-ink">
               {item.label}
             </a>
           ))}
+          <a
+            href="#contact"
+            className="border-2 border-ink px-4 py-1.5 text-sm font-semibold transition hover:bg-ink hover:text-paper"
+          >
+            Contacto
+          </a>
         </nav>
 
         <button
           type="button"
-          className="rounded-lg border border-white/15 p-2 text-white md:hidden"
+          className="border-2 border-ink p-1.5 md:hidden"
           onClick={() => setIsOpen((prev) => !prev)}
-          aria-label="Toggle menu"
+          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={isOpen}
         >
           {isOpen ? <HiX /> : <HiMenuAlt3 />}
         </button>
       </div>
 
       {isOpen && (
-        <nav className="section-container pb-4 md:hidden">
-          <div className="glass-panel rounded-xl p-3">
-            {navItems.map((item) => (
+        <nav className="section-container pb-4 md:hidden" aria-label="Principal móvil">
+          <div className="border-2 border-ink bg-paper">
+            {[...navItems, { label: "Contacto", href: "#contact" }].map((item) => (
               <a
-                key={item.label}
+                key={item.href}
                 href={item.href}
-                className="block rounded-lg px-3 py-2 text-sm text-textMuted transition hover:bg-white/5 hover:text-accentBlue"
+                className="block border-b border-rule px-4 py-3 text-sm font-medium last:border-b-0"
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}

@@ -1,123 +1,94 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { FiExternalLink, FiMail } from "react-icons/fi";
+import { FiArrowUpRight, FiCopy } from "react-icons/fi";
 import personalInfo from "../../data/personalInfo";
-import Button from "../ui/Button";
-import useScrollAnimation from "../../hooks/useScrollAnimation";
 
-const EMAIL_ADDRESS = "facu.witt@gmail.com";
+const copyText = async (text) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.setAttribute("readonly", "true");
+    textArea.style.position = "absolute";
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.select();
+    const copied = document.execCommand("copy");
+    document.body.removeChild(textArea);
+    return copied;
+  } catch {
+    return false;
+  }
+};
 
 const Contact = () => {
-  const { ref, isVisible } = useScrollAnimation();
-  const [copyMessage, setCopyMessage] = useState("");
-  const copyMessageTimeoutRef = useRef(null);
+  const [status, setStatus] = useState("");
+  const timeoutRef = useRef(null);
 
-  useEffect(() => {
-    return () => {
-      if (copyMessageTimeoutRef.current) {
-        window.clearTimeout(copyMessageTimeoutRef.current);
-      }
-    };
-  }, []);
+  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
 
-  const copyEmailToClipboard = async (email) => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-        return true;
-      }
-
-      const textArea = document.createElement("textarea");
-      textArea.value = email;
-      textArea.setAttribute("readonly", "true");
-      textArea.style.position = "absolute";
-      textArea.style.left = "-9999px";
-      document.body.appendChild(textArea);
-      textArea.select();
-
-      const copied = document.execCommand("copy");
-      document.body.removeChild(textArea);
-      return copied;
-    } catch {
-      return false;
-    }
-  };
-
-  const handleEmailClick = async (event, href) => {
-    event.preventDefault();
-
-    const copied = await copyEmailToClipboard(EMAIL_ADDRESS);
-
-    if (!copied) {
-      setCopyMessage("No pude copiar el email automáticamente.");
-      if (copyMessageTimeoutRef.current) {
-        window.clearTimeout(copyMessageTimeoutRef.current);
-      }
-      copyMessageTimeoutRef.current = window.setTimeout(() => {
-        setCopyMessage("");
-      }, 3000);
-      return;
-    }
-
-    setCopyMessage("Mi email fue copiado correctamente.");
-
-    if (copyMessageTimeoutRef.current) {
-      window.clearTimeout(copyMessageTimeoutRef.current);
-    }
-
-    copyMessageTimeoutRef.current = window.setTimeout(() => {
-      setCopyMessage("");
-      window.location.href = href;
-    }, 3000);
+  const handleCopy = async () => {
+    const copied = await copyText(personalInfo.email);
+    setStatus(copied ? "Email copiado" : "No se pudo copiar. Seleccioná el email y copialo a mano.");
+    window.clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => setStatus(""), 3000);
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-28">
-      <div className="section-container" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-slateDeep/70 p-8 sm:p-12"
-        >
-          <div className="absolute -right-10 top-0 h-40 w-40 rounded-full bg-accentBlue/20 blur-3xl" />
-          <div className="absolute -left-8 bottom-0 h-36 w-36 rounded-full bg-accentViolet/20 blur-3xl" />
+    <section id="contact" className="scroll-mt-16 py-20 sm:py-28">
+      <div className="section-container">
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="absolute -top-4 left-[8%] h-[calc(100%+2rem)] w-[18%] bg-vermilion sm:left-[30%] sm:w-[12%]"
+          />
+          <h2 className="relative font-display text-[clamp(2rem,9vw,7.5rem)] font-black uppercase leading-[0.88] type-wide">
+            ¿Hablamos?
+          </h2>
+        </div>
 
-          <div className="relative">
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">Construyamos algo juntos!</h2>
-            <p className="mt-4 max-w-2xl text-textMuted">
-              Estoy disponible para colaborar en proyectos donde pueda aportar valor.
+        <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
+          <div>
+            <p className="max-w-[48ch] text-lg leading-relaxed">
+              Si tenés un proyecto, un puesto o una idea en la que pueda sumar, escribime.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {personalInfo.socialLinks.map((link) => (
-                <Button
-                  key={link.label}
-                  as="a"
-                  href={link.href}
-                  variant="secondary"
-                  className="gap-2"
-                  target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={link.href.startsWith("mailto") ? undefined : "noreferrer"}
-                  onClick={
-                    link.href.startsWith("mailto")
-                      ? (event) => handleEmailClick(event, link.href)
-                      : undefined
-                  }
-                >
-                  {link.label}
-                  {link.href.startsWith("mailto") ? <FiMail /> : <FiExternalLink />}
-                </Button>
-              ))}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href={`mailto:${personalInfo.email}`}
+                className="break-all font-display text-2xl font-extrabold underline decoration-vermilion decoration-[3px] underline-offset-[6px] sm:text-3xl"
+              >
+                {personalInfo.email}
+              </a>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="inline-flex items-center gap-2 border-2 border-ink px-3 py-1.5 text-sm font-semibold transition hover:bg-ink hover:text-paper"
+              >
+                <FiCopy aria-hidden="true" /> Copiar
+              </button>
             </div>
-
-            {copyMessage ? (
-              <p className="mt-4 text-sm text-accentBlue" aria-live="polite">
-                {copyMessage}
-              </p>
-            ) : null}
+            <p className="mt-3 h-6 font-hand text-xl text-leaf" aria-live="polite">
+              {status}
+            </p>
           </div>
-        </motion.div>
+
+          <ul className="flex flex-wrap gap-3 md:justify-end">
+            {personalInfo.socialLinks.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:bg-vermilion"
+                >
+                  {link.label} <FiArrowUpRight aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

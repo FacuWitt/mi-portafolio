@@ -1,24 +1,34 @@
 const personalInfo = {
   name: "Facundo Witt",
-  role: "Estudiante de Ingeniería en Sistemas | Backend & Frontend Developer",
-  tagline:
-    "Diseño e implemento soluciones de software que den respuesta a problemas complejos, priorizando sobre todo la calidad del producto final.",
-  shortBio:
-    "Me encuentro en el último año de la carrera Ingeniería en Sistemas de Información en la UTN FRC, con enfoque en desarrollo fullstack, mejora de procesos de negocio, y diseño de sistemas.",
+  firstName: "Facundo",
+  lastName: "Witt",
+  role: "Ingeniero en Sistemas de Información",
+  focus: "Desarrollador full-stack",
+  location: "Córdoba, Argentina",
+  statement:
+    "Analizo a fondo, decido con criterio propio y delego la ejecución en agentes, con contratos claros y revisión de cada entrega.",
+  photo: "/me.jpg",
   about: [
-    "Me entusiasma resolver problemas desafiantes con sistemas que involucren el diseño de modelos matemáticos, implementación de simulaciones, algoritmos eficientes y diseño de métricas.",
-    "Últimamente trabajo principalmente en backend con Spring Boot y FastAPI.",
-    "El frontend también me apasiona, disfruto diseñar e implementar interfaces agradables, intuitivas y escalables. Suelo utilizar React + Tailwind.",
-    "Disfruto aprender en profundidad lo necesario para cada proyecto, nutrirme de la gente que me rodea y compartir lo que sé, intentando fomentar un ambiente de trabajo agradable, colaborativo y productivo.",
+    "Soy Ingeniero en Sistemas de Información (UTN FRC). Trabajo con Java y Spring Boot en el backend, y con React y React Native en web y mobile.",
+    "Mi forma de trabajar empieza por el análisis: entender el problema, comparar alternativas y tomar las decisiones de diseño con criterio propio. La implementación la delego en agentes, con guías y contratos precisos, y reviso cada entrega antes de darla por buena.",
+    "No me aferro a una forma de trabajar por costumbre. Si aparece una mejor, la pruebo y, si da mejores resultados, la adopto.",
   ],
-  ctas: {
-    primary: "Ver proyectos",
-    secondary: "Contactarme",
+  now: {
+    place: "Banco Roela",
+    area: "Transformación, equipo de SIRO",
+    since: "desde junio 2026",
+    text: "Especifico requerimientos de negocio y de sistema, acompaño a los desarrolladores de nuestros clientes en sus integraciones y construyo herramientas internas que automatizan procesos.",
   },
+  tags: [
+    { label: "Java + Spring Boot", color: "bg-mustard text-ink" },
+    { label: "React + React Native", color: "bg-cobalt text-white" },
+    { label: "Desarrollo con agentes", color: "bg-vermilion text-white" },
+    { label: "Análisis y requerimientos", color: "bg-leaf text-white" },
+  ],
+  email: "facu.witt@gmail.com",
   socialLinks: [
     { label: "GitHub", href: "https://github.com/FacuWitt" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/facundowitt" },
-    { label: "Email", href: "mailto:facu.witt@gmail.com" },
   ],
 };
 

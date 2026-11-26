@@ -1,13 +1,16 @@
 const turneroMedico = {
 		id: "turnero-medico",
-		title: "Vitalis (Turnero Medico)",
+		title: "Vitalis",
+  subtitle: "Gestión de turnos médicos",
+  year: "2025",
+  kind: "Proyecto académico",
+  theme: { bg: "bg-cobalt", text: "text-white", muted: "text-white/80", button: "bg-paper text-cobalt" },
 		description:
 			"Sistema de gestión de turnos médicos con control de acceso, utilización de agendas, notificaciones por email y tareas programadas.",
 		longDescription:
-			"Proyecto Full Stack, donde me desempeñé como Backend-Developer con FastAPI para gestionar turnos medicos, con control de acceso por autoridad y roles, notificaciones automáticas por email y tareas programadas para seguimiento de turnos.",
+			"Proyecto Full Stack, donde me desempeñé como desarrollador backend con FastAPI para gestionar turnos médicos, con control de acceso por autoridad y roles, notificaciones automáticas por email y tareas programadas para seguimiento de turnos.",
 		technologies: ["FastAPI", "Python", "SQLite3", "React"],
 		repoUrl: "https://github.com/santiagost/Turnero-Medico.git",
-		mockup: "TM",
 		cover: "/projects/turnero-medico/0.png",
 		gallery: [
 			"/projects/turnero-medico/0.png",
@@ -23,10 +26,9 @@ const turneroMedico = {
 		],
 		highlights: [
 			"Control de acceso por autoridad y roles",
-			"Notificaciones automaticas por email",
+			"Notificaciones automáticas por email",
 			"Tareas programadas para seguimiento de turnos",
 		],
-		size: "medium",
   };
 
 export default turneroMedico;

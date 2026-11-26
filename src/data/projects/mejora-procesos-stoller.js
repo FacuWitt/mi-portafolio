@@ -1,6 +1,11 @@
 const mejoraProcesosStoller = {
   id: "mejora-procesos-stoller",
-  title: "Mejora de Procesos Stoller",
+  title: "Stoller Argentina",
+  shortTitle: "Stoller",
+  subtitle: "Gestión de la mejora de procesos",
+  year: "2025",
+  kind: "Proyecto con empresa real",
+  theme: { bg: "bg-leaf", text: "text-white", muted: "text-white/80", button: "bg-paper text-leaf" },
   description:
     "Proyecto de Gestión de Mejora de Procesos, donde se diseñó un plan de mejora sistémico para un proceso en particular de Stoller Argentina.",
   longDescription:
@@ -10,11 +15,10 @@ const mejoraProcesosStoller = {
     "Diagnóstico organizacional profundo (FODA, CAME, Procesos).",
     "Optimización integral del proceso de Producción.",
     "Implementación de plan sostenible y esquema IT.",
-    "Identificacion de KPIs y diseño de metricas para medición de impacto real."
+    "Identificación de KPIs y diseño de métricas para medición de impacto real."
   ],
   technologies: ["Miro", "Estudios de mercado", "FODA", "CAME", "Mapas de procesos", "Propuesta de valor", "Plan de mejora", "KPIs"],
   repoUrl: "https://drive.google.com/drive/folders/1rDAAlD1GPJlTzPwmePcLOYmbEgbCPDUo?usp=sharing",
-  mockup: "MP",
   cover: "/projects/mejora-procesos-stoller/cover.png",
   gallery: [
       "/projects/mejora-procesos-stoller/m1.png",
@@ -24,7 +28,5 @@ const mejoraProcesosStoller = {
 			"/projects/mejora-procesos-stoller/m5.png",
       "/projects/mejora-procesos-stoller/m6.png",
       ],
-  
-  size: "medium",
 };
 export default mejoraProcesosStoller;
